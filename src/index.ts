@@ -30,7 +30,7 @@ import {BlockStatusResponse} from './types/beans';
 
 export * from './types/beans';
 
-export interface Rise extends APIWrapper {
+export interface DposAPI extends APIWrapper {
   /**
    * Default Node Address: ex: http://localhost:1234 (no leading slash)
    */
@@ -149,7 +149,7 @@ function addTransportBuilder<T extends { blocks: BlocksAPI, peers: PeersAPI }>(o
   return obj as any; // TS bug 10727 on spread operators i need to do this.
 }
 
-export const rise: Rise = (() => {
+export const dposAPI: DposAPI = (() => {
   const toRet = {
     nodeAddress: '',
     newWrapper(nodeAddress: string): APIWrapper {
@@ -170,7 +170,7 @@ export const rise: Rise = (() => {
         req
       );
     },
-  } as Rise;
+  } as DposAPI;
 
   function rproxy<R>(obj: { params?: any, path: string, method?: string, data?: any }, cback: cbackType<R>): Promise<R & BaseApiResponse> {
     return requester(toRet.nodeAddress).apply(null, arguments);

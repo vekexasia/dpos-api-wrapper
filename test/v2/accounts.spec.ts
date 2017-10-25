@@ -1,6 +1,6 @@
-import { accounts } from '../../src/apis/accounts';
-import * as sinon from 'sinon';
 import { expect } from 'chai';
+import * as sinon from 'sinon';
+import { accounts } from '../../src/apis/accounts';
 import { apiBasicChecker } from './testutils';
 
 describe('Accounts', () => {
@@ -57,9 +57,9 @@ describe('Accounts', () => {
   it('.putDelegates should propagate given params in PUT method', () => {
     const spy = sinon.spy();
     const body = {
-      secret: 'theSecret',
+      delegates: ['+DELEGATE1', '-DELEGATE2'],
       publicKey: 'public',
-      delegates: ['+DELEGATE1', '-DELEGATE2']
+      secret: 'theSecret',
     };
     accounts(spy).putDelegates(body);
     apiBasicChecker(spy, '/accounts/delegates', undefined);
