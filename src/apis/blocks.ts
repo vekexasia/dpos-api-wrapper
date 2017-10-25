@@ -1,25 +1,26 @@
-import { cback, rs } from '../types/base';
-import { Block, BlockStatusResponse } from '../types/beans';
-import { BlocksAPI } from '../types/apis/BlocksAPI';
+import {BlocksAPI} from '../types/apis/BlocksAPI';
+import {cback, rs as RsType} from '../types/base';
+import {Block, BlockStatusResponse} from '../types/beans';
 
 /**
  * @private
  * @internal
  */
-export const blocks = (rs: rs): BlocksAPI => ({
+export const blocks = (rs: RsType): BlocksAPI => ({
 
+  // tslint:disable-next-line max-line-length
   getFeeSchedule(callback?: cback<{ fees: { send: number, vote: number, secondsignature: number, delegate: number, multisignature: number, dapp: number } }>) {
     return rs(
       {
-        path: '/blocks/getFees'
+        path: '/blocks/getFees',
       },
       callback);
   },
 
-  getFee(callback?: cback<{ fee: number }>){
+  getFee(callback?: cback<{ fee: number }>) {
     return rs(
       {
-        path: '/blocks/getFee'
+        path: '/blocks/getFee',
       },
       callback);
   },
@@ -27,16 +28,15 @@ export const blocks = (rs: rs): BlocksAPI => ({
   getReward(callback?: cback<{ reward: number }>) {
     return rs(
       {
-        path: '/blocks/getReward'
+        path: '/blocks/getReward',
       },
       callback);
   },
 
-
   getSupply(callback?: cback<{ supply: number }>) {
     return rs(
       {
-        path: '/blocks/getSupply'
+        path: '/blocks/getSupply',
       },
       callback);
   },
@@ -44,7 +44,7 @@ export const blocks = (rs: rs): BlocksAPI => ({
   getStatus(callback?: cback<BlockStatusResponse>) {
     return rs(
       {
-        path: '/blocks/getStatus'
+        path: '/blocks/getStatus',
       },
       callback);
   },
@@ -52,7 +52,7 @@ export const blocks = (rs: rs): BlocksAPI => ({
   getHeight(callback?: cback<{ height: number }>) {
     return rs(
       {
-        path: '/blocks/getHeight'
+        path: '/blocks/getHeight',
       },
       callback);
   },
@@ -60,7 +60,7 @@ export const blocks = (rs: rs): BlocksAPI => ({
   getNethash(callback?: cback<{ nethash: string }>) {
     return rs(
       {
-        path: '/blocks/getNethash'
+        path: '/blocks/getNethash',
       },
       callback);
   },
@@ -68,7 +68,7 @@ export const blocks = (rs: rs): BlocksAPI => ({
   getMilestone(callback?: cback<{ milestone: number }>) {
     return rs(
       {
-        path: '/blocks/getMilestone'
+        path: '/blocks/getMilestone',
       },
       callback);
   },
@@ -76,8 +76,8 @@ export const blocks = (rs: rs): BlocksAPI => ({
   getBlock(id: string, callback?: cback<{ block: Block }>) {
     return rs(
       {
-        path: '/blocks/get',
-        params: {id}
+        params: { id },
+        path  : '/blocks/get',
       },
       callback);
   },
@@ -85,10 +85,9 @@ export const blocks = (rs: rs): BlocksAPI => ({
   getBlocks(query: { [k: string]: any }, callback?: cback<{ blocks: Block[], count: number }>) {
     return rs(
       {
-        path: '/blocks',
-        params: {...query}
+        params: { ...query },
+        path  : '/blocks',
       },
       callback);
-  }
+  },
 });
-

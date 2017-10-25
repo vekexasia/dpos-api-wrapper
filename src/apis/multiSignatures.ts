@@ -1,50 +1,49 @@
-import { cback, rs } from '../types/base';
 import { MultiSignaturesAPI } from '../types/apis/MultiSignaturesAPI';
+import { cback, rs as RsType } from '../types/base';
 /**
  * @private
  * @internal
  */
-export const multiSignatures = (rs: rs): MultiSignaturesAPI => ({
+export const multiSignatures = (rs: RsType): MultiSignaturesAPI => ({
   getPending(publicKey: string, callback?: cback<any>) {
     return rs({
+      method: 'GET',
+      params: { publicKey },
       path: '/multisignatures/pending',
-      params: {
-        publicKey
-      },
-      method: 'GET'
     }, callback);
   },
 
+  // tslint:disable-next-line max-line-length
   createMultiSigAccount(sig: { secret: string, lifetime: number, min: number, publicKeys: string[] }, callback?: cback<any>) {
     return rs({
-      path: '/multisignatures',
-      method: 'PUT',
       data: {
-        secret: sig.secret,
+        keysgroup: sig.publicKeys,
         lifetime: sig.lifetime, // hours in integer
         min: sig.min, // min signatures need to approve
-        keysgroup: sig.publicKeys
-      }
+        secret: sig.secret,
+      },
+      method: 'PUT',
+      path: '/multisignatures',
     }, callback);
   },
 
   sign(obj: { secret: string, publicKey: string, transactionId: string }, callback?: cback<any>) {
     return rs({
-      path: '/multisignatures/sign',
-      method: 'POST',
       data: {
-        secret: obj.secret,
         publicKey: obj.publicKey,
-        transactionId: obj.transactionId
-      }
+        secret: obj.secret,
+        transactionId: obj.transactionId,
+      },
+      method: 'POST',
+      path: '/multisignatures/sign',
     }, callback);
   },
 
   getAccounts(publicKey: string, callback?: cback<any>) {
     return rs({
-      path: '/multisignatures/accounts',
+      method: 'GET',
       params: {publicKey},
-      method: 'GET'
+      path: '/multisignatures/accounts',
     }, callback);
-  }
+  },
 });

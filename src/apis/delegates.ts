@@ -1,18 +1,24 @@
-import { BaseApiResponse, cback, rs } from '../types/base';
-import { Delegate, Transaction } from '../types/beans';
-import { DelegatesAPI } from '../types/apis/DelegatesAPI';
+import {DelegatesAPI} from '../types/apis/DelegatesAPI';
+import {cback, rs as RsType} from '../types/base';
+import {Delegate, Transaction} from '../types/beans';
+// tslint:disable max-line-length
 /**
  * @private
  * @internal
  */
-export const delegates = (rs: rs): DelegatesAPI => ({
+export const delegates = (rs: RsType): DelegatesAPI => ({
 
+  /**
+   * Creates a new delegate. Be aware that this will send your secrets over the network
+   * @deprecated
+   * @returns {Promise<Transaction<{delegate: {username: string; publicKey: string}}> & BaseApiResponse>}
+   */
   enable(data: { secret: string, secondSecret?: string, username: string }, callback?: cback<Transaction<{ delegate: { username: string, publicKey: string } }>>) {
     return rs(
       {
-        path: '/delegates',
+        data,
         method: 'PUT',
-        data
+        path  : '/delegates',
       },
       callback
     );
@@ -21,11 +27,11 @@ export const delegates = (rs: rs): DelegatesAPI => ({
   getList(query: { limit?: number, offset?: number, orderBy?: string } = {}, callback?: cback<{ delegates: Delegate[], totalCount: number }>) {
     return rs(
       {
-        path: `/delegates`,
-        params: query
+        params: query,
+        path  : '/delegates',
       },
       callback
-    )
+    );
   },
 
   getByUsername(username: string, callback?: cback<{ delegate: Delegate }>) {
@@ -36,25 +42,23 @@ export const delegates = (rs: rs): DelegatesAPI => ({
     return this.getByKeyVal('publicKey', publicKey, callback);
   },
 
-  getByKeyVal(key: 'username'|'publicKey', value: string, callback?: cback<{ delegate: Delegate }>) {
+  getByKeyVal(key: 'username' | 'publicKey', value: string, callback?: cback<{ delegate: Delegate }>) {
     const query = {};
-    query[key] = value;
+    query[key]  = value;
     return rs(
       {
-        path: `/delegates/get`,
-        params: query
+        params: query,
+        path  : '/delegates/get',
       },
       callback
     );
   },
 
-  getVoters(publicKey: string, callback?: cback<{ accounts: {username?:string, address:string, publicKey:string, balance:string}[] }>) {
+  getVoters(publicKey: string, callback?: cback<{ accounts: Array<{ username?: string, address: string, publicKey: string, balance: string }> }>) {
     return rs(
       {
-        path: `/delegates/voters`,
-        params: {
-          publicKey: publicKey
-        }
+        params: { publicKey },
+        path  : '/delegates/voters',
       },
       callback
     );
@@ -63,51 +67,49 @@ export const delegates = (rs: rs): DelegatesAPI => ({
   toggleForging(obj: { secret: string, enable: boolean }, callback?: cback<{ address: string }>) {
     return rs(
       {
-        path: `/delegates/forging/${obj.enable ? 'enable' : 'disable'}`,
-        data: {
-          secret: obj.secret
+        data  : {
+          secret: obj.secret,
         },
-        method: 'POST'
-      },
-      callback
-    )
-  },
-
-  getForgedByAccount(publicKey: string, callback?: cback<{ fees: string, rewards: string, forged: string }>) {
-    return rs(
-      {
-        path: `/delegates/forging/getForgedByAccount`,
-        params: {
-          generatorPublicKey: publicKey
-        }
-      },
-      callback
-    )
-  },
-
-  getForgingStatus(publicKey?:string|cback<{enabled:boolean, delegates: string[]}>, callback?: cback<{enabled:boolean}>){
-    if (typeof(publicKey) === 'function') {
-      callback = publicKey;
-      publicKey = undefined;
-    }
-    return rs(
-      {
-        path: `/delegates/forging/status`,
-        params: {
-          publicKey: publicKey
-        }
+        method: 'POST',
+        path  : `/delegates/forging/${obj.enable ? 'enable' : 'disable'}`,
       },
       callback
     );
   },
 
-  getNextForgers(limit:number , callback?: cback<{currentBlock: number, currentBlockSlot: number, currentSlot: number, delegates: string[]}>) {
+  getForgedByAccount(publicKey: string, callback?: cback<{ fees: string, rewards: string, forged: string }>) {
     return rs(
       {
-        path: `/delegates/getNextForgers`,
-        params: { limit }
+        params: {
+          generatorPublicKey: publicKey,
+        },
+        path  : '/delegates/forging/getForgedByAccount',
       },
       callback
-    )
-  }
+    );
+  },
+
+  getForgingStatus(publicKey?: string | cback<{ enabled: boolean, delegates: string[] }>, callback?: cback<{ enabled: boolean }>) {
+    if (typeof(publicKey) === 'function') {
+      callback  = publicKey;
+      publicKey = undefined;
+    }
+    return rs(
+      {
+        params: { publicKey },
+        path  : '/delegates/forging/status',
+      },
+      callback
+    );
+  },
+
+  getNextForgers(limit: number, callback?: cback<{ currentBlock: number, currentBlockSlot: number, currentSlot: number, delegates: string[] }>) {
+    return rs(
+      {
+        params: { limit },
+        path  : '/delegates/getNextForgers',
+      },
+      callback
+    );
+  },
 });

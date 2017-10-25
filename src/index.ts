@@ -12,6 +12,7 @@ import {
   TransportApi,
   TransportHeaders
 } from './types/apis/';
+
 import {
   accounts,
   blocks,
@@ -24,154 +25,154 @@ import {
   transactions,
   transport
 } from './apis/';
-import {BaseApiResponse, cback, rs} from './types/base';
+import {BaseApiResponse, cback as cbackType, rs as rsType} from './types/base';
 import {BlockStatusResponse} from './types/beans';
 
 export * from './types/beans';
-
 
 export interface Rise extends APIWrapper {
   /**
    * Default Node Address: ex: http://localhost:1234 (no leading slash)
    */
-  nodeAddress: string
+  nodeAddress: string;
 
   /**
    * Creates a new API Wrapper with the given node address.
    * So that you can be connected to multiple nodes at once.
    * @param nodeAddress Ex: http://localhost:1234 (no leading slash)
    */
-  newWrapper(nodeAddress: string): APIWrapper
+  newWrapper(nodeAddress: string): APIWrapper;
 }
 
 export interface APIWrapper {
   /**
    * Accounts APIs
    */
-  accounts: AccountsAPI
+  accounts: AccountsAPI;
   /**
    * Blocks Query APIs
    */
-  blocks: BlocksAPI
+  blocks: BlocksAPI;
   /**
    * Node loading status APIs
    */
-  loader: LoaderAPI
+  loader: LoaderAPI;
   /**
    * Transactions APIs
    */
-  transactions: TransactionsAPI
+  transactions: TransactionsAPI;
   /**
    * Peers APIs
    */
-  peers: PeersAPI
+  peers: PeersAPI;
   /**
    * Signature APIs
    */
-  signatures: SignaturesAPI
+  signatures: SignaturesAPI;
   /**
    * Delegates APIs
    */
-  delegates: DelegatesAPI
+  delegates: DelegatesAPI;
   /**
    * Multi Signature Accounts APIs
    */
-  multiSignatures: MultiSignaturesAPI
+  multiSignatures: MultiSignaturesAPI;
 
   /**
    * Decentralized Apps APIs (in progress)
    */
-  dapps: DappsAPI,
+  dapps: DappsAPI;
 
   /**
    * Easily create a transport API without providing headers.
    * @param {boolean} flushCache flush current transportAPI cache
    * @returns {Promise<TransportApi>}
    */
-  buildTransport: (flushCache?: boolean) => Promise<TransportApi>
+  buildTransport: (flushCache?: boolean) => Promise<TransportApi>;
 
   /**
    * Access transport APIs
    * @param {TransportHeaders} headers
    * @returns {TransportApi}
    */
-  transport: (headers: TransportHeaders) => TransportApi
+  transport: (headers: TransportHeaders) => TransportApi;
 }
 
-const requester = (nodeAddress) => <R>(obj: { noApiPrefix?: boolean, headers?: any, params?: any, path: string, method?: string, data?: any }, cback: cback<R>): Promise<R & BaseApiResponse> => {
+const requester = (nodeAddress) => <R>(obj: { noApiPrefix?: boolean, headers?: any, params?: any, path: string, method?: string, data?: any }, cback: cbackType<R>): Promise<R & BaseApiResponse> => {
   return axios({
-    url    : `${nodeAddress}/${obj.noApiPrefix ? '' : 'api'}${obj.path}`,
     json   : true,
     timeout: 4000,
-    ...obj
+    url    : `${nodeAddress}/${obj.noApiPrefix ? '' : 'api'}${obj.path}`,
+    ...obj,
   })
-    .then(resp => {
-      if (resp.data.success == false) {
+    .then((resp) => {
+      if (resp.data.success === false) {
         return Promise.reject(new Error(resp.data.error || resp.data.message));
       }
       return resp.data;
     })
-    .then(a => {
+    .then((a) => {
       if (typeof(cback) !== 'undefined') {
         cback(null, a);
       }
       return a;
     })
-    .catch(err => {
+    .catch((err) => {
       if (typeof(cback) !== 'undefined') {
         cback(err);
       }
       return Promise.reject(err);
-    })
+    });
 };
 
-function addTransportBuilder<T extends { blocks: BlocksAPI, peers: PeersAPI }>(obj: T, rs: rs): T & { buildTransport: (flushCache?: boolean) => Promise<TransportApi> } {
+function addTransportBuilder<T extends { blocks: BlocksAPI, peers: PeersAPI }>(obj: T, rs: rsType): T & { buildTransport: (flushCache?: boolean) => Promise<TransportApi> } {
   let transportCache = null;
+  // tslint:disable-next-line no-string-literal
   obj['buildTransport'] = (flushCache: boolean = false) => {
     if (flushCache || transportCache === null) {
       return Promise.all([
         obj.peers.version(),
-        obj.blocks.getStatus()
+        obj.blocks.getStatus(),
       ])
         .then((resp: [{ version: string }, BlockStatusResponse]) => ({
           nethash: resp[1].nethash,
           port   : 1000,
-          version: resp[0].version
+          version: resp[0].version,
         }))
-        .then(h => {
+        .then((h) => {
           transportCache = transport(rs)(h);
           return transportCache;
-        })
+        });
     }
     return Promise.resolve(transportCache);
   };
-  return obj as any; //TS bug 10727 on spread operators i need to do this.
+  return obj as any; // TS bug 10727 on spread operators i need to do this.
 }
 
 export const rise: Rise = (() => {
   const toRet = {
     nodeAddress: '',
     newWrapper(nodeAddress: string): APIWrapper {
-      let req = requester(nodeAddress);
+      const req = requester(nodeAddress);
       return addTransportBuilder(
         {
           accounts       : accounts(req),
-          loader         : loader(req),
-          transactions   : transactions(req),
-          peers          : peers(req),
           blocks         : blocks(req),
-          signatures     : signatures(req),
-          delegates      : delegates(req),
-          multiSignatures: multiSignatures(req),
           dapps          : dapps(req),
-          transport      : transport(req)
+          delegates      : delegates(req),
+          loader         : loader(req),
+          multiSignatures: multiSignatures(req),
+          peers          : peers(req),
+          signatures     : signatures(req),
+          transactions   : transactions(req),
+          transport      : transport(req),
         },
         req
       );
-    }
+    },
   } as Rise;
 
-  function rproxy<R>(obj: { params?: any, path: string, method?: string, data?: any }, cback: cback<R>): Promise<R & BaseApiResponse> {
+  function rproxy<R>(obj: { params?: any, path: string, method?: string, data?: any }, cback: cbackType<R>): Promise<R & BaseApiResponse> {
     return requester(toRet.nodeAddress).apply(null, arguments);
   }
 
@@ -188,4 +189,3 @@ export const rise: Rise = (() => {
 
   return addTransportBuilder(toRet, rproxy);
 })();
-

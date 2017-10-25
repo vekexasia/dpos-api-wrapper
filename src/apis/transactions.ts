@@ -1,20 +1,20 @@
-import { BaseApiResponse, cback, rs } from '../types/base';
-import { Transaction } from '../types/beans';
 import { TransactionsAPI } from '../types/apis/TransactionsAPI';
+import { cback, rs as RsType } from '../types/base';
+import { Transaction } from '../types/beans';
 /**
  * @private
  * @internal
  */
-export const transactions = (rs: rs): TransactionsAPI => ({
+export const transactions = (rs: RsType): TransactionsAPI => ({
 
   get<T>(id: string, callback?: cback<{ transaction: Transaction<T> }>) {
     return rs({
-      path: '/transactions/get',
       params: {id},
+      path: '/transactions/get',
     }, callback);
   },
 
-  count(callback?: cback<{ confirmed: number, multisignature: number, unconfirmed: number, queued: number }>){
+  count(callback?: cback<{ confirmed: number, multisignature: number, unconfirmed: number, queued: number }>) {
     return rs({
       path: '/transactions/count',
     }, callback);
@@ -22,29 +22,30 @@ export const transactions = (rs: rs): TransactionsAPI => ({
 
   getList(query = {}, callback?) {
     return rs({
-      path: '/transactions',
       params: {...query},
+      path: '/transactions',
     }, callback);
   },
 
+  // tslint:disable-next-line max-line-length
   send(conf: { secret: string, amount: number, recipientId: string, publicKey?: string, secondSecret?: string }, callback?: cback<any>) {
     return rs({
-      path: '/transactions',
+      data: {...conf},
       method: 'PUT',
-      data: {...conf}
+      path: '/transactions',
     }, callback);
   },
 
-  getUnconfirmedTransactions(callback?: cback<{ transactions: Transaction<any>[] }>) {
+  getUnconfirmedTransactions(callback?: cback<{ transactions: Array<Transaction<any>> }>) {
     return rs({
-      path: '/transactions/unconfirmed'
+      path: '/transactions/unconfirmed',
     }, callback);
   },
 
-  getUnconfirmedTransaction(id: string, callback?: cback<{ transactions: Transaction<any>[] }>) {
+  getUnconfirmedTransaction(id: string, callback?: cback<{ transactions: Array<Transaction<any>> }>) {
     return rs({
+      params: {id},
       path: '/transactions/unconfirmed/get',
-      params: {id}
     }, callback);
-  }
+  },
 });

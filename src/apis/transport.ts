@@ -1,61 +1,61 @@
-import {rs} from '../types/base';
 import {TransportApi, TransportHeaders} from '../types/apis/TransportAPI';
+import {rs as RsType} from '../types/base';
 import {BaseTransaction, Signature} from '../types/beans';
 
-export const transport = (rs: rs): (headers: TransportHeaders) => TransportApi =>
+export const transport = (rs: RsType): (headers: TransportHeaders) => TransportApi =>
   (headers: TransportHeaders) => ({
     getHeight(cback) {
       return rs({
+        headers,
         noApiPrefix: true,
         path       : 'peer/height',
-        headers
       }, cback);
     },
     listPeers(cback) {
       return rs({
+        headers,
         noApiPrefix: true,
         path       : 'peer/list',
-        headers
       }, cback);
     },
     ping(cback) {
       return rs({
+        headers,
         noApiPrefix: true,
         path       : 'peer/ping',
-        headers
       }, cback);
     },
     postTransaction(transaction: BaseTransaction<any>, cback) {
       return rs({
+        data       : {transaction},
+        headers,
+        method     : 'POST',
         noApiPrefix: true,
         path       : 'peer/transactions',
-        method     : 'POST',
-        data       : {transaction},
-        headers
       }, cback);
     },
-    postTransactions(transactions: BaseTransaction<any>[], cback) {
+    postTransactions(transactions: Array<BaseTransaction<any>>, cback) {
       return rs({
+        data       : {transactions},
+        headers,
+        method     : 'POST',
         noApiPrefix: true,
         path       : 'peer/transactions',
-        method     : 'POST',
-        data       : {transactions},
-        headers
       }, cback);
     },
     postSignature(signature: Signature|Signature[], cback) {
       return rs({
-        noApiPrefix: true,
-        path       : 'peer/signatures',
-        method     : 'POST',
         data       : (() => {
           if (Array.isArray(signature)) {
-            return { signatures: signature }
+            return { signatures: signature };
           } else {
             return { signature };
           }
         })(),
-        headers
+        headers,
+        method     : 'POST',
+        noApiPrefix: true,
+        path       : 'peer/signatures',
       }, cback);
-    }
+    },
   });

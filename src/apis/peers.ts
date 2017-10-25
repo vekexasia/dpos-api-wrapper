@@ -1,23 +1,23 @@
-import { cback, rs } from '../types/base';
-import { Peer, PeerState } from '../types/beans';
 import { PeersAPI } from '../types/apis/PeersAPI';
+import { cback, rs as RsType } from '../types/base';
+import { Peer, PeerState } from '../types/beans';
+// tslint:disable max-line-length
 /**
  * @private
  * @internal
  */
-export const peers = (rs: rs): PeersAPI => ({
+export const peers = (rs: RsType): PeersAPI => ({
   getList(query: { state?: PeerState, os?: string, version?: string, limit?: number, offset?: number, orderBy?: string } = {}, callback?: cback<{ peers: Peer[] }>) {
     return rs({
-      path: '/peers',
       params: {...query},
+      path: '/peers',
     }, callback);
   },
 
   getByIPPort(params: { ip: string, port: number }, callback?: cback<{ peer: Peer }>) {
     return rs({
-      path: '/peers/get',
       params: {...params},
-
+      path: '/peers/get',
     }, callback);
   },
 

@@ -1,30 +1,28 @@
-import { cback, rs } from '../types/base';
-import { Account, Delegate } from '../types/beans';
 import { AccountsAPI } from '../types/apis/AccountsAPI';
+import { cback, rs as RsType } from '../types/base';
+import { Account, Delegate } from '../types/beans';
 
 /**
  * @private
  * @internal
  */
-export const accounts = (rs: rs): AccountsAPI => ({
-
+export const accounts = (rs: RsType): AccountsAPI => ({
 
   open(secret: string, callback?: cback<{ account: Account }>) {
     return rs({
-        path: '/accounts/open/',
+        data: {secret},
         method: 'POST',
-        data: {secret}
+        path: '/accounts/open/',
       },
       callback
     );
   },
 
-
   getBalance(address: string, callback?: cback<{ balance: string, unconfirmedBalance: string }>) {
     return rs(
       {
-        path: `/accounts/getBalance`,
-        params: {address}
+        params: {address},
+        path: '/accounts/getBalance',
       },
       callback
     );
@@ -33,8 +31,8 @@ export const accounts = (rs: rs): AccountsAPI => ({
   getPublicKey(address: string, callback?: cback<{ publicKey: string }>) {
     return rs(
       {
-        path: `/accounts/getPublicKey`,
-        params: {address}
+        params: {address},
+        path: '/accounts/getPublicKey',
       },
       callback
     );
@@ -43,9 +41,9 @@ export const accounts = (rs: rs): AccountsAPI => ({
   generatePublicKey(secret: string, callback?: cback<{ publicKey: string }>) {
     return rs(
       {
-        path: `/accounts/generatePublicKey`,
+        data: {secret},
         method: 'POST',
-        data: {secret}
+        path: '/accounts/generatePublicKey',
       },
       callback
     );
@@ -54,8 +52,8 @@ export const accounts = (rs: rs): AccountsAPI => ({
   getAccount(address: string, callback?: cback<{ account: Account }>) {
     return rs(
       {
-        path: `/accounts`,
-        params: {address}
+        params: {address},
+        path: '/accounts',
       },
       callback
     );
@@ -64,8 +62,8 @@ export const accounts = (rs: rs): AccountsAPI => ({
   getAccountByPublicKey(publicKey: string, callback?: cback<{ account: Account }>) {
     return rs(
       {
-        path: `/accounts`,
-        params: {publicKey}
+        params: {publicKey},
+        path: '/accounts',
       },
       callback
     );
@@ -74,34 +72,27 @@ export const accounts = (rs: rs): AccountsAPI => ({
   getDelegates(address: string, callback?: cback<{ delegates: Delegate[] }>) {
     return rs(
       {
-        path: `/accounts/delegates`,
-        params: {address}
+        params: {address},
+        path: '/accounts/delegates',
       },
       callback
     );
   },
 
+  /**
+   * This method will stop working as it sends your secret over the network
+   * @deprecated
+   * @returns {Promise<any>}
+   */
+  // tslint:disable-next-line max-line-length
   putDelegates(data: { secret: string, publicKey: string, delegates: string[], secondSecret?: string }, callback?: cback<any>): Promise<any> {
     return rs(
       {
-        path: `/accounts/delegates`,
+        data,
         method: 'PUT',
-        data
+        path: '/accounts/delegates',
       },
       callback
     );
-  }
-
+  },
 });
-
-export interface Account {
-  address: string
-  unconfirmedBalance: string
-  balance: string
-  publicKey: string
-  unconfirmedSignature: number
-  secondSignature: number
-  secondPublicKey: string
-  multisignatures: any[]
-  u_multisignatures: any[]
-}

@@ -1,15 +1,15 @@
-import { cback, rs } from '../types/base';
 import { SignaturesAPI } from '../types/apis/SignaturesAPI';
+import { cback, rs as RsType } from '../types/base';
 /**
  * @private
  * @internal
  */
-export const signatures = (rs: rs): SignaturesAPI => ({
+export const signatures = (rs: RsType): SignaturesAPI => ({
   add(data: { secret: string, secondSecret: string, publicKey?: string }, callback?: cback<any>) {
     return rs({
-      path: '/signatures',
+      data,
       method: 'PUT',
-      data
+      path: '/signatures',
     }, callback);
-  }
+  },
 });
