@@ -5,7 +5,7 @@ export interface TransactionsAPI {
 
   get<T>(id: string, callback?: cback<{ transaction: Transaction<T> }>): Promise<{ transaction: Transaction<T> & { height: number, blockId: string, confirmations: number } } & BaseApiResponse>;
 
-  getList(query: {
+  getList(query?: {
             blockId?: string, 'and:blockId'?: string,
             type?: TransactionType, 'and:type'?: TransactionType,
             senderId?: string, 'and:senderId'?: string,

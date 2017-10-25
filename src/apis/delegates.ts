@@ -11,7 +11,6 @@ export const delegates = (rs: RsType): DelegatesAPI => ({
   /**
    * Creates a new delegate. Be aware that this will send your secrets over the network
    * @deprecated
-   * @returns {Promise<Transaction<{delegate: {username: string; publicKey: string}}> & BaseApiResponse>}
    */
   enable(data: { secret: string, secondSecret?: string, username: string }, callback?: cback<Transaction<{ delegate: { username: string, publicKey: string } }>>) {
     return rs(
@@ -77,12 +76,12 @@ export const delegates = (rs: RsType): DelegatesAPI => ({
     );
   },
 
-  getForgedByAccount(publicKey: string, callback?: cback<{ fees: string, rewards: string, forged: string }>) {
+  getForgedByAccount(data: string | { generatorPublicKey: string, start: number, end: number }, callback?: cback<{ fees: string, rewards: string, forged: string }>) {
     return rs(
       {
-        params: {
-          generatorPublicKey: publicKey,
-        },
+        params: typeof(data) === 'string' ? {
+          generatorPublicKey: data,
+        } : data,
         path  : '/delegates/forging/getForgedByAccount',
       },
       callback

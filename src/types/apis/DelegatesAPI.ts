@@ -4,7 +4,7 @@ import {Delegate, Transaction} from '../beans';
 export interface DelegatesAPI {
   enable(data: { secret: string, secondSecret?: string, username: string }, callback?: cback<Transaction<{ delegate: { username: string, publicKey: string } }>>): Promise<Transaction<{ delegate: { username: string, publicKey: string } }> & BaseApiResponse>;
 
-  getList(query: { limit?: number, offset?: number, orderBy?: string }, callback?: cback<{ delegates: Delegate[], totalCount: number }>): Promise<{ delegates: Delegate[], totalCount: number } & BaseApiResponse>;
+  getList(query?: { limit?: number, offset?: number, orderBy?: string }, callback?: cback<{ delegates: Delegate[], totalCount: number }>): Promise<{ delegates: Delegate[], totalCount: number } & BaseApiResponse>;
 
   getByUsername(username: string, callback?: cback<{ delegate: Delegate }>): Promise<{ delegate: Delegate } & BaseApiResponse>;
 
@@ -16,7 +16,12 @@ export interface DelegatesAPI {
 
   toggleForging(obj: { secret: string, enable: boolean }, callback?: cback<{ address: string }>): Promise<{ address: string } & BaseApiResponse>;
 
-  getForgedByAccount(publicKey: string, callback?: cback<{ fees: string, rewards: string, forged: string }>): Promise<{ fees: string, rewards: string, forged: string } & BaseApiResponse>;
+  /**
+   * Return the forged amount by account
+   * @param param if string is passed it's threated as publicKey
+   * @param callback callback to get the result
+   */
+  getForgedByAccount(param: string|{ generatorPublicKey: string, start: number, end: number }, callback?: cback<{ fees: string, rewards: string, forged: string }>): Promise<{ fees: string, rewards: string, forged: string, count?: number } & BaseApiResponse>;
 
   getForgingStatus(callback?: cback<{ enabled: boolean, delegates: string[] }>): Promise<{ enabled: boolean, delegates: string[] } & BaseApiResponse>;
 

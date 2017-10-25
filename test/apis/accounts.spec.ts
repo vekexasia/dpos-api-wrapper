@@ -18,14 +18,21 @@ describe('Accounts', () => {
     const spy = sinon.spy();
     accounts(spy).getBalance('address');
     apiBasicChecker(spy, '/accounts/getBalance', undefined);
-    expect(spy.firstCall.args[0].params).to.be.deep.eq({address: 'address'})
+    expect(spy.firstCall.args[0].params).to.be.deep.eq({address: 'address'});
+  });
+
+  it('.getAccountByPublicKey should propagate given params and construct url correcly', () => {
+    const spy = sinon.spy();
+    accounts(spy).getAccountByPublicKey('publicKey');
+    apiBasicChecker(spy, '/accounts', undefined);
+    expect(spy.firstCall.args[0].params).to.be.deep.eq({publicKey: 'publicKey'});
   });
 
   it('.getPublicKey should propagate given params and construct url correcly', () => {
     const spy = sinon.spy();
     accounts(spy).getPublicKey('address');
     apiBasicChecker(spy, '/accounts/getPublicKey', undefined);
-    expect(spy.firstCall.args[0].params).to.be.deep.eq({address: 'address'})
+    expect(spy.firstCall.args[0].params).to.be.deep.eq({address: 'address'});
 
   });
 
@@ -66,4 +73,8 @@ describe('Accounts', () => {
     expect(spy.firstCall.args[0].method).is.eq('PUT');
     expect(spy.firstCall.args[0].data).is.deep.eq(body);
   });
+
+  describe('buildTranspot', () => {
+
+  })
 });
