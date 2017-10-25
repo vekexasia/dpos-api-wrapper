@@ -12,8 +12,6 @@ import {
   TransportApi,
   TransportHeaders
 } from './types/apis/';
-
-export * from './types/beans';
 import {
   accounts,
   blocks,
@@ -26,7 +24,10 @@ import {
   transactions,
   transport
 } from './apis/';
-import { BaseApiResponse, cback } from './types/base';
+import {BaseApiResponse, cback, rs} from './types/base';
+import {BlockStatusResponse} from './types/beans';
+
+export * from './types/beans';
 
 
 export interface Rise extends APIWrapper {
@@ -83,6 +84,13 @@ export interface APIWrapper {
   dapps: DappsAPI,
 
   /**
+   * Easily create a transport API without providing headers.
+   * @param {boolean} flushCache flush current transportAPI cache
+   * @returns {Promise<TransportApi>}
+   */
+  buildTransport: (flushCache?: boolean) => Promise<TransportApi>
+
+  /**
    * Access transport APIs
    * @param {TransportHeaders} headers
    * @returns {TransportApi}
@@ -90,10 +98,10 @@ export interface APIWrapper {
   transport: (headers: TransportHeaders) => TransportApi
 }
 
-const requester         = (nodeAddress) => <R>(obj: { noApiPrefix?: boolean, headers?: any, params?: any, path: string, method?: string, data?: any }, cback: cback<R>): Promise<R & BaseApiResponse> => {
+const requester = (nodeAddress) => <R>(obj: { noApiPrefix?: boolean, headers?: any, params?: any, path: string, method?: string, data?: any }, cback: cback<R>): Promise<R & BaseApiResponse> => {
   return axios({
-    url : `${nodeAddress}/${obj.noApiPrefix ? '' : 'api'}${obj.path}`,
-    json: true,
+    url    : `${nodeAddress}/${obj.noApiPrefix ? '' : 'api'}${obj.path}`,
+    json   : true,
     timeout: 4000,
     ...obj
   })
@@ -116,22 +124,50 @@ const requester         = (nodeAddress) => <R>(obj: { noApiPrefix?: boolean, hea
       return Promise.reject(err);
     })
 };
+
+function addTransportBuilder<T extends { blocks: BlocksAPI, peers: PeersAPI }>(obj: T, rs: rs): T & { buildTransport: (flushCache?: boolean) => Promise<TransportApi> } {
+  let transportCache = null;
+  obj['buildTransport'] = (flushCache: boolean = false) => {
+    if (flushCache || transportCache === null) {
+      return Promise.all([
+        obj.peers.version(),
+        obj.blocks.getStatus()
+      ])
+        .then((resp: [{ version: string }, BlockStatusResponse]) => ({
+          nethash: resp[1].nethash,
+          port   : 1000,
+          version: resp[0].version
+        }))
+        .then(h => {
+          transportCache = transport(rs)(h);
+          return transportCache;
+        })
+    }
+    return Promise.resolve(transportCache);
+  };
+  return obj as any; //TS bug 10727 on spread operators i need to do this.
+}
+
 export const rise: Rise = (() => {
   const toRet = {
     nodeAddress: '',
     newWrapper(nodeAddress: string): APIWrapper {
-      return {
-        accounts       : accounts(requester(nodeAddress)),
-        loader         : loader(requester(nodeAddress)),
-        transactions   : transactions(requester(nodeAddress)),
-        peers          : peers(requester(nodeAddress)),
-        blocks         : blocks(requester(nodeAddress)),
-        signatures     : signatures(requester(nodeAddress)),
-        delegates      : delegates(requester(nodeAddress)),
-        multiSignatures: multiSignatures(requester(nodeAddress)),
-        dapps          : dapps(requester(nodeAddress)),
-        transport      : transport(requester(nodeAddress))
-      }
+      let req = requester(nodeAddress);
+      return addTransportBuilder(
+        {
+          accounts       : accounts(req),
+          loader         : loader(req),
+          transactions   : transactions(req),
+          peers          : peers(req),
+          blocks         : blocks(req),
+          signatures     : signatures(req),
+          delegates      : delegates(req),
+          multiSignatures: multiSignatures(req),
+          dapps          : dapps(req),
+          transport      : transport(req)
+        },
+        req
+      );
     }
   } as Rise;
 
@@ -150,6 +186,6 @@ export const rise: Rise = (() => {
   toRet.dapps           = dapps(rproxy);
   toRet.transport       = transport(rproxy);
 
-  return toRet;
+  return addTransportBuilder(toRet, rproxy);
 })();
 
