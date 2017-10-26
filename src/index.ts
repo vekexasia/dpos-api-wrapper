@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import {
   AccountsAPI,
   BlocksAPI,
@@ -25,8 +26,8 @@ import {
   transactions,
   transport
 } from './apis/';
-import {BaseApiResponse, cback as cbackType, rs as rsType} from './types/base';
-import {BlockStatusResponse} from './types/beans';
+import {addTransportBuilder, requester} from './internal_utils';
+import {BaseApiResponse, cback as cbackType} from './types/base';
 
 export * from './types/beans';
 
@@ -98,62 +99,11 @@ export interface APIWrapper {
   transport: (headers: TransportHeaders) => TransportApi;
 }
 
-const requester = (nodeAddress) => <R>(obj: { noApiPrefix?: boolean, headers?: any, params?: any, path: string, method?: string, data?: any }, cback: cbackType<R>): Promise<R & BaseApiResponse> => {
-  return axios({
-    json   : true,
-    timeout: 4000,
-    url    : `${nodeAddress}/${obj.noApiPrefix ? '' : 'api'}${obj.path}`,
-    ...obj,
-  })
-    .then((resp) => {
-      if (resp.data.success === false) {
-        return Promise.reject(new Error(resp.data.error || resp.data.message));
-      }
-      return resp.data;
-    })
-    .then((a) => {
-      if (typeof(cback) !== 'undefined') {
-        cback(null, a);
-      }
-      return a;
-    })
-    .catch((err) => {
-      if (typeof(cback) !== 'undefined') {
-        cback(err);
-      }
-      return Promise.reject(err);
-    });
-};
-
-function addTransportBuilder<T extends { blocks: BlocksAPI, peers: PeersAPI }>(obj: T, rs: rsType): T & { buildTransport: (flushCache?: boolean) => Promise<TransportApi> } {
-  let transportCache = null;
-  // tslint:disable-next-line no-string-literal
-  obj['buildTransport'] = (flushCache: boolean = false) => {
-    if (flushCache || transportCache === null) {
-      return Promise.all([
-        obj.peers.version(),
-        obj.blocks.getStatus(),
-      ])
-        .then((resp: [{ version: string }, BlockStatusResponse]) => ({
-          nethash: resp[1].nethash,
-          port   : 1000,
-          version: resp[0].version,
-        }))
-        .then((h) => {
-          transportCache = transport(rs)(h);
-          return transportCache;
-        });
-    }
-    return Promise.resolve(transportCache);
-  };
-  return obj as any; // TS bug 10727 on spread operators i need to do this.
-}
-
 export const dposAPI: DposAPI = (() => {
   const toRet = {
     nodeAddress: '',
     newWrapper(nodeAddress: string): APIWrapper {
-      const req = requester(nodeAddress);
+      const req = requester(axios, nodeAddress);
       return addTransportBuilder(
         {
           accounts       : accounts(req),
@@ -173,7 +123,7 @@ export const dposAPI: DposAPI = (() => {
   } as DposAPI;
 
   function rproxy<R>(obj: { params?: any, path: string, method?: string, data?: any }, cback: cbackType<R>): Promise<R & BaseApiResponse> {
-    return requester(toRet.nodeAddress).apply(null, arguments);
+    return requester(axios, toRet.nodeAddress).apply(null, arguments);
   }
 
   toRet.accounts        = accounts(rproxy);

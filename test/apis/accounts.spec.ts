@@ -7,6 +7,7 @@ describe('Accounts', () => {
 
   it('.open should propagate given params', () => {
     const spy = sinon.spy();
+    console.log(accounts);
     accounts(spy).open('secret');
     apiBasicChecker(spy, '/accounts/open/', undefined);
     expect(spy.firstCall.args[0].method).is.eq('POST');
@@ -74,7 +75,4 @@ describe('Accounts', () => {
     expect(spy.firstCall.args[0].data).is.deep.eq(body);
   });
 
-  describe('buildTranspot', () => {
-
-  })
 });
