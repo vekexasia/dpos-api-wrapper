@@ -21,18 +21,17 @@
   },
   "keywords": [
     "rise",
-    "vision",
-    "sdk",
-    "crypto",
-    "currency",
-    "risevision",
+    "lisk",
+    "shift",
+    "dpos",
+    "oxy",
+    "ark",
     "cryptocurrency",
-    "alt",
     "coin",
     "altcoin"
   ],
   "bugs": {
-    "url": "https://github.com/risevision/rise-js-sdk/issues"
+    "url": "https://github.com/vekexasia/dpos-api-wrapper/issues"
   },
   "license": "MIT",
   "readmeFilename": "README.md",

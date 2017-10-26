@@ -1,8 +1,6 @@
 language: node_js
 node_js:
-  - "6"
-  - "7"
-sudo: required
+  - '6'
 before_install:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
@@ -16,3 +14,21 @@ cache:
     - node_modules
 after_success:
   - npm run coverage
+before_deploy:
+  - npm run package
+  - npm run docs
+deploy:
+  -
+    provider: npm
+    api_key:
+      secure: O94vxxmXbOlRbOR+CB3qO1Z15NDyWwkOd6eDd5FRNhihq70j6XECvHa1+wVB2jUD6LkikfhIWlku//rBQAeBVH7HCUq5C/xyUFgZ5YIuZ5X1E48cvQHuJnYwJB0rCujLnpbeMOxZSWH4MZMJY6w+PtNcP22zU2fhHqi6Mg+RuvvEtYGsdMrQFk+n13YyL55mblsd2so2Hw5rvpYJFHRbJaUJAX6BBw9rFHjLAMk+2xb0DWpzAYNjGXHmxo7IB179bLUxKlrOgRkFShoMMABPB7hd0VoKgnSC3h7mt77NApJX7ke9X80l4/jwP9geYYPW0rBd8rBh2vMZTb00c15if4le2VrbvBbkmx3A7BiwrjbHNl/gMkedIiRPcSbf0isPOC+NffR1x7Ip9LfEh3YFbDw933T76Gd4N+LeVQRxxXJgG3UineO/aalf6qhEpywPskUqHiLSOoosVKP0eUBcUcgAz/YcB80QpnICv72fmdlfZcJdZabqHdBlvyb4GMXYDlIx3GNVDoKYBZHqab9IpccfDkpCn5Aqh8GbiFXVG7uyCAhRuxbLFgHMnZBWLDno7eOf0umqZOdYzSlEfubKBOkUn4zGOdMm+hcxM2BZeDRngMG1inY/xYyfV3g0Ip7B1kczmNIC1ZvZkneZE7xizNZtsmuElUUOn5fwSWMEL68=
+    email:
+      secure: TC9GUizX6NxI674cTpPuHfc96vtkAgDRKKjjYLLhH721b/m0sOUZbiDiQ6AC93Tyfs7vP9ozd7t9iFsfqtrAmkX9oSuYCocwuUQcd2sMKkl3944e4HdxpNNLqjnbUkfrDlWF0kaOCOvLkME87EMpv7pqdOxaMTk3TaoUGmJlTw9FeFi14qBB95ylyWaYI/q180auD9r5UD9grQR3fO5McHdYsCESXF9rvXIh4OHqQ8EAjhTiqeg6MwQtKh9NAhLjCPIitfuPyzsOfLV8I1aOcaGWJxusfq0sc6ziPgZo5Jb6cUOy/yKeiXsM/kpkVvsAnC8Gsf7grMZV898sSePpcBvZqoo2+iqu7ZVo34raGbkekqNUwEw3bg6TGPUMknyBMLq4055rRm2zUCOGofjjBDKzweN+lJlffdAeA5ZgJJJkYGcEHKACBKfjuD1OvBAJftop8GQutCsOAjDf9zmW2eVoQmQLWKgts/RB8e9gjBkRwOyzaVkpRK3ykWUYTPRBC2aX/ynBO9hFGLsdWb8WXtHZ03TA/jruLzoNsMakBORNze27G2MPqhRAnG9ZeZMCi06iuYYcQTzkfc/5uJVLw86nsC4gr34AIGxLBdLhi0XnZvPV/oZQ2/KwnrF9/7jfpessVIO+ZnyErvX4KQ9fT8QkIohOO0zu9BW5ApRVtyc=
+    on:
+      tags: true
+  -
+    provider: pages
+    skip_cleanup: true
+    local_dir: docs/
+    on:
+      tags: true
