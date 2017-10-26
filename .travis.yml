@@ -26,10 +26,10 @@ deploy:
       secure: TC9GUizX6NxI674cTpPuHfc96vtkAgDRKKjjYLLhH721b/m0sOUZbiDiQ6AC93Tyfs7vP9ozd7t9iFsfqtrAmkX9oSuYCocwuUQcd2sMKkl3944e4HdxpNNLqjnbUkfrDlWF0kaOCOvLkME87EMpv7pqdOxaMTk3TaoUGmJlTw9FeFi14qBB95ylyWaYI/q180auD9r5UD9grQR3fO5McHdYsCESXF9rvXIh4OHqQ8EAjhTiqeg6MwQtKh9NAhLjCPIitfuPyzsOfLV8I1aOcaGWJxusfq0sc6ziPgZo5Jb6cUOy/yKeiXsM/kpkVvsAnC8Gsf7grMZV898sSePpcBvZqoo2+iqu7ZVo34raGbkekqNUwEw3bg6TGPUMknyBMLq4055rRm2zUCOGofjjBDKzweN+lJlffdAeA5ZgJJJkYGcEHKACBKfjuD1OvBAJftop8GQutCsOAjDf9zmW2eVoQmQLWKgts/RB8e9gjBkRwOyzaVkpRK3ykWUYTPRBC2aX/ynBO9hFGLsdWb8WXtHZ03TA/jruLzoNsMakBORNze27G2MPqhRAnG9ZeZMCi06iuYYcQTzkfc/5uJVLw86nsC4gr34AIGxLBdLhi0XnZvPV/oZQ2/KwnrF9/7jfpessVIO+ZnyErvX4KQ9fT8QkIohOO0zu9BW5ApRVtyc=
     on:
       tags: true
-#  -
-#    provider: pages
-#    local_dir: docs/
-#    skip_cleanup: true
-#    github_token: $GITHUB_TOKEN
-#    on:
-#      tags: true
+  -
+    provider: pages
+    local_dir: docs/
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    on:
+      tags: true

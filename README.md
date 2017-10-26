@@ -1,4 +1,4 @@
-[![npm](https://img.shields.io/npm/v/risejs.svg)](https://npmjs.org/package/risejs) [![Build Status](https://travis-ci.org/vekexasia/dpos-api-wrapper.svg?branch=master)](https://travis-ci.org/vekexasia/dpos-api-wrapper)  [![Coverage Status](https://coveralls.io/repos/github/vekexasia/dpos-api-wrapper/badge.svg?branch=master)](https://coveralls.io/github/vekexasia/dpos-api-wrapper?branch=master) 
+[![npm](https://img.shields.io/npm/v/dpos-api-wrapper.svg)](https://npmjs.org/package/dpos-api-wrapper) [![Build Status](https://travis-ci.org/vekexasia/dpos-api-wrapper.svg?branch=master)](https://travis-ci.org/vekexasia/dpos-api-wrapper)  [![Coverage Status](https://coveralls.io/repos/github/vekexasia/dpos-api-wrapper/badge.svg?branch=master)](https://coveralls.io/github/vekexasia/dpos-api-wrapper?branch=master) 
 
 # Dpos Javascript Library
 
