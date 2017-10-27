@@ -42,4 +42,9 @@ describe('dposAPI', () => {
     });
   });
 
+  it('one method should call resolver and probably fail due to inexistent host', async () => {
+    dposAPI.nodeAddress = 'http://127.0.0.1:7777';
+    expect(dposAPI.loader.status()).to.be.rejected;
+  });
+
 });

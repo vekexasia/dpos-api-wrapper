@@ -2,11 +2,11 @@
 
 # Dpos Javascript Library
 
-Through this sdk you can interact with a rise node in an easy way. The library works both in the browser and Node.js.
+Through this sdk you can interact with a dposAPI node in an easy way. The library works both in the browser and Node.js.
 
 ## Documentation
 
-All available methods are available [in the jsdoc](https://risevision.github.io/rise-ts/interfaces/rise.html)
+All available methods are available [in the jsdoc](https://vekexasia.github.io/dpos-api-wrapper/interfaces/dposapi.html)
 
 ## Quick Start
 
@@ -15,10 +15,10 @@ All available methods are available [in the jsdoc](https://risevision.github.io/
 Either download `dist/browser/index.js` or use gitcdn as follows:
 
 ```html
-<script type="text/javascript" src="https://gitcdn.xyz/cdn/risevision/rise-js-sdk/master/dist/browser/index.js"></script>
+<script type="text/javascript" src="https://unpkg.com/dpos-api-wrapper/dist/browser/index.js"></script>
 <script>
-  rise.nodeAddress = 'http://example.com:5566'; // Set your node url here. (no leading slash)
-  // If you don't have a nodejust use https://wallet.rise.vision
+  dposAPI.nodeAddress = 'http://example.com:5566'; // Set your node url here. (no leading slash)
+  
   // ...
 </script>
 
@@ -27,12 +27,12 @@ Either download `dist/browser/index.js` or use gitcdn as follows:
 ### Include it with npm (Suitable also for webpack/browserify)
 
 ```bash
-npm i risejs -D
+npm i dpos-api-wrapper -D
 ```
 
 ```javascript
-var rise = require('risejs').rise;
-rise.nodeAddress= 'http://example.com:5566'; // Set your node url here. (no leading slash) 
+var dposAPI = require('dpos-api-wrapper').dposAPI;
+dposAPI.nodeAddress= 'http://example.com:5566'; // Set your node url here. (no leading slash) 
 
 ```
 
@@ -51,15 +51,15 @@ Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | 8+ ✔ |
 
 Node >= 4.x is fully supported :)
 
-
 ## Examples
 
 All the APIs are designed to be easy to use. You can use both Callbacks or Promises; you decide.
 
-For example you can open a new account by doing:
+For example you can open a new account by doing. Be aware that all the methods sending a secret over the network are
+going to be deprecated:
 
 ```javascript
-rise.accounts.open('secret', function(error, account) {
+dposAPI.accounts.open('secret', function(error, account) {
   if (!error) {
     // yay!
     console.log(account);
@@ -73,7 +73,7 @@ rise.accounts.open('secret', function(error, account) {
 or
 
 ```javascript
-rise.accounts.open('secret')
+dposAPI.accounts.open('secret')
     .then(function (account) {
       console.log(account);
     })
@@ -85,7 +85,7 @@ rise.accounts.open('secret')
 which can be even shorter if you write your code in TypeScript or ES6
 
 ```javascript
-rise.accounts.open('secret')
+dposAPI.accounts.open('secret')
     .then(console.log)
     .catch(error => console.log('error: ', error));
 ```
@@ -95,19 +95,12 @@ rise.accounts.open('secret')
 
 In some cases you need to connect to multiple nodes.
 
-To do so, just use the [newWrapper](https://risevision.github.io/rise-js-sdk/interfaces/rise.html#newwrapper) method:
+To do so, just use the [newWrapper](https://vekexasia.github.io/dpos-api-wrapper/interfaces/dposapi.html#newwrapper) method:
 
 ```javascript
-var node1 = rise.newWrapper('http://node1:1234');
-var node2 = rise.newWrapper('http://node2:1234');
+var node1 = dposAPI.newWrapper('http://node1:1234');
+var node2 = dposAPI.newWrapper('http://node2:1234');
 
-// interact with node1 & node2 using the same APIs available within 'rise' variable.
+// interact with node1 & node2 using the same APIs available within 'dposAPI' variable.
 ```
 
-## Where is this library used?
-
-The library is currently used in the following projects:
- - RISE bot in slack
- - [dpostools.com (whole website)](https://dpostools.com/RISE)
- - [rise_pool pool](https://dpospools.com/pool/rise_pool)
- - Telegram [@delegatesbot](https://t.me/delegatesbot)
