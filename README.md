@@ -2,7 +2,7 @@
 
 # Dpos Javascript Library
 
-Through this sdk you can interact with a dposAPI node in an easy way. The library works both in the browser and Node.js.
+Through this library you can interact with a dposAPI node in an easy way. The library works both in the browser and Node.js.
 
 ## Documentation
 
@@ -17,7 +17,7 @@ Either download `dist/browser/index.js` or use gitcdn as follows:
 ```html
 <script type="text/javascript" src="https://unpkg.com/dpos-api-wrapper/dist/browser/index.js"></script>
 <script>
-  dposAPI.nodeAddress = 'http://example.com:5566'; // Set your node url here. (no leading slash)
+  dposAPI.nodeAddress = 'http://example.com:5566'; // Set your node url here. (no trailing slash)
   
   // ...
 </script>
@@ -32,7 +32,7 @@ npm i dpos-api-wrapper -D
 
 ```javascript
 var dposAPI = require('dpos-api-wrapper').dposAPI;
-dposAPI.nodeAddress= 'http://example.com:5566'; // Set your node url here. (no leading slash) 
+dposAPI.nodeAddress= 'http://example.com:5566'; // Set your node url here. (no trailing slash) 
 
 ```
 
