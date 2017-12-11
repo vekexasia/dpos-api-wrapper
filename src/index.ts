@@ -97,6 +97,8 @@ export interface APIWrapper {
    * @returns {TransportApi}
    */
   transport: (headers: TransportHeaders) => TransportApi;
+
+  rawRequest: <R>(obj: { noApiPrefix?: boolean, headers?: any, params?: any, path: string, method?: string, data?: any }, cback: cbackType<R>) => Promise<R & BaseApiResponse>;
 }
 
 export const dposAPI: DposAPI = (() => {
@@ -113,6 +115,7 @@ export const dposAPI: DposAPI = (() => {
           loader         : loader(req),
           multiSignatures: multiSignatures(req),
           peers          : peers(req),
+          rawRequest     : req,
           signatures     : signatures(req),
           transactions   : transactions(req),
           transport      : transport(req),
@@ -136,6 +139,7 @@ export const dposAPI: DposAPI = (() => {
   toRet.multiSignatures = multiSignatures(rproxy);
   toRet.dapps           = dapps(rproxy);
   toRet.transport       = transport(rproxy);
+  toRet.rawRequest      = rproxy;
 
   return addTransportBuilder(toRet, rproxy);
 })();

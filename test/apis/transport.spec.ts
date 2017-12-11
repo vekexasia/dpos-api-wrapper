@@ -16,6 +16,9 @@ describe('Transport', () => {
     tr   = transport(stub)(headers);
   });
 
+  it('.getHeaders should return headers', () => {
+    expect(tr.getHeaders()).to.be.deep.eq(headers);
+  });
   it('.getHeight calls peer/getHeight + noApiPrefix and headers', () => {
     tr.getHeight();
     expect(stub.calledOnce).is.true;

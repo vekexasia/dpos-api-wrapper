@@ -1,5 +1,5 @@
 import { BaseApiResponse, cback } from '../base';
-import {BaseTransaction, Peer, Signature, Transaction} from '../beans';
+import { BaseTransaction, Peer, Signature, Transaction } from '../beans';
 
 export interface TransportHeaders {
   nethash: string;
@@ -53,6 +53,11 @@ export interface TransportApi {
    * @param {cback<any>} callback
    * @returns {Promise<BaseApiResponse>}
    */
-  postSignature(signature: Signature|Signature[], callback?: cback<void>): Promise<BaseApiResponse>;
+  postSignature(signature: Signature | Signature[], callback?: cback<void>): Promise<BaseApiResponse>;
 
+  /**
+   * Returns the current used headers when communicating with a peer node
+   * using the transport API
+   */
+  getHeaders(): TransportHeaders;
 }

@@ -4,6 +4,9 @@ import {BaseTransaction, Signature} from '../types/beans';
 
 export const transport = (rs: RsType): (headers: TransportHeaders) => TransportApi =>
   (headers: TransportHeaders) => ({
+    getHeaders() {
+      return headers;
+    },
     getHeight(cback) {
       return rs({
         headers,
