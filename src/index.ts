@@ -38,11 +38,17 @@ export interface DposAPI extends APIWrapper {
   nodeAddress: string;
 
   /**
+   * Timeout for default DposAPI requests
+   */
+  timeout: number;
+
+  /**
    * Creates a new API Wrapper with the given node address.
    * So that you can be connected to multiple nodes at once.
    * @param nodeAddress Ex: http://localhost:1234 (no leading slash)
+   * @param opts connection options
    */
-  newWrapper(nodeAddress: string): APIWrapper;
+  newWrapper(nodeAddress: string, opts?: { timeout: number }): APIWrapper;
 }
 
 export interface APIWrapper {
@@ -104,8 +110,8 @@ export interface APIWrapper {
 export const dposAPI: DposAPI = (() => {
   const toRet = {
     nodeAddress: '',
-    newWrapper(nodeAddress: string): APIWrapper {
-      const req = requester(axios, nodeAddress);
+    newWrapper(nodeAddress: string, opts: {timeout: number} = {timeout: 4000}): APIWrapper {
+      const req = requester(axios, nodeAddress, opts);
       return addTransportBuilder(
         {
           accounts       : accounts(req),
@@ -123,10 +129,11 @@ export const dposAPI: DposAPI = (() => {
         req
       );
     },
+    timeout: 4000,
   } as DposAPI;
 
   function rproxy<R>(obj: { params?: any, path: string, method?: string, data?: any }, cback: cbackType<R>): Promise<R & BaseApiResponse> {
-    return requester(axios, toRet.nodeAddress).apply(null, arguments);
+    return requester(axios, toRet.nodeAddress, {timeout: toRet.timeout}).apply(null, arguments);
   }
 
   toRet.accounts        = accounts(rproxy);

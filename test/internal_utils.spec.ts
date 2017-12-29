@@ -10,46 +10,44 @@ chai.use(chaiAsPromised);
 
 // const index       = proxyquire(() => require('../src/index', { './apis/': apiStub, axios}) as  { dposAPI: typeof origDPOSAPI };
 
-const subpackages = ['accounts', 'blocks', 'dapps', 'delegates', 'loader', 'multiSignatures', 'peers', 'signatures', 'transactions'];
-const functions   = ['buildTransport', 'transport'];
-
+const dftOpts = { timeout: 10000 };
 describe('internal_utils', () => {
   describe('requester', () => {
 
     it('should return a fn', () => {
-      expect(requester(null, null)).to.be.a('function');
+      expect(requester(null, null, null)).to.be.a('function');
     });
 
     it('should return a fn that calls axios', () => {
       const stub = sinon.stub().returns(Promise.resolve({ data: { success: true } }));
-      expect(requester(stub as any, null)({} as any, undefined))
+      expect(requester(stub as any, null, dftOpts)({} as any, undefined))
       expect(stub.calledOnce).is.true;
     });
 
     it('should return a fn that calls axios with correct nodeAddress+url', () => {
       const stub = sinon.stub().returns(Promise.resolve({ data: { success: true } }));
 
-      expect(requester(stub as any, 'http://vekexasia.rules')({} as any, undefined))
+      expect(requester(stub as any, 'http://vekexasia.rules', dftOpts)({} as any, undefined))
       expect(stub.firstCall.args[0].url).to.contain('http://vekexasia.rules');
     });
 
     it('should return a fn that calls axios with correct nodeAddress+url', () => {
       const stub = sinon.stub().returns(Promise.resolve({ data: { success: true } }));
 
-      expect(requester(stub as any, 'http://vekexasia.rules')({ path: '/hey' } as any, undefined))
+      expect(requester(stub as any, 'http://vekexasia.rules', dftOpts)({ path: '/hey' } as any, undefined))
       expect(stub.firstCall.args[0].url).to.be.eq('http://vekexasia.rules/api/hey');
     });
 
     it('should return a fn that calls axios with correct nodeAddress+url without Api Prefix', () => {
       const stub = sinon.stub().returns(Promise.resolve({ data: { success: true } }));
 
-      expect(requester(stub as any, 'http://vekexasia.rules')({ path: '/hey', noApiPrefix: true } as any, undefined))
+      expect(requester(stub as any, 'http://vekexasia.rules', dftOpts)({ path: '/hey', noApiPrefix: true } as any, undefined))
       expect(stub.firstCall.args[0].url).to.be.eq('http://vekexasia.rules/hey');
     });
 
     it('should wrap error if promise rejected for some reason', async () => {
       const stub = sinon.stub().returns(Promise.reject('Error'));
-      await expect(requester(stub as any, 'http://vekexasia.rules')({
+      await expect(requester(stub as any, 'http://vekexasia.rules', dftOpts)({
         path       : '/hey',
         noApiPrefix: true
       } as any, undefined))
@@ -58,7 +56,7 @@ describe('internal_utils', () => {
 
     it('should wrap error if request ok but API fail', async () => {
       const stub = sinon.stub().returns(Promise.resolve({ data: { success: false, error: 'Error' } }));
-      await expect(requester(stub as any, 'http://vekexasia.rules')({
+      await expect(requester(stub as any, 'http://vekexasia.rules', dftOpts)({
         path       : '/hey',
         noApiPrefix: true
       } as any, undefined))
@@ -67,7 +65,7 @@ describe('internal_utils', () => {
 
     it('should wrap error message if request ok but API fail and no error present', async () => {
       const stub = sinon.stub().returns(Promise.resolve({ data: { success: false, message: 'Error' } }));
-      await expect(requester(stub as any, 'http://vekexasia.rules')({
+      await expect(requester(stub as any, 'http://vekexasia.rules', dftOpts)({
         path       : '/hey',
         noApiPrefix: true
       } as any, undefined))
@@ -78,7 +76,7 @@ describe('internal_utils', () => {
       const data      = { success: true, hey: 'hi' };
       const stub      = sinon.stub().returns(Promise.resolve({ data }));
       const cbackStub = sinon.stub();
-      await requester(stub as any, 'http://vekexasia.rules')({ path: '/hey', noApiPrefix: true } as any, cbackStub);
+      await requester(stub as any, 'http://vekexasia.rules', dftOpts)({ path: '/hey', noApiPrefix: true } as any, cbackStub);
 
       expect(cbackStub.calledOnce).is.true;
       expect(cbackStub.firstCall.args[0]).not.exist;
@@ -88,9 +86,9 @@ describe('internal_utils', () => {
     it('should propagate error to cback also', async () => {
       const cbackStub = sinon.stub();
       const stub      = sinon.stub().returns(Promise.resolve({ data: { success: false, error: 'Error' } }));
-      await expect(requester(stub as any, 'http://vekexasia.rules')({
+      await expect(requester(stub as any, 'http://vekexasia.rules', dftOpts)({
         path       : '/hey',
-        noApiPrefix: true
+        noApiPrefix: true,
       } as any, cbackStub))
         .to.be.rejectedWith('Error');
 

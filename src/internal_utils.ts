@@ -6,10 +6,10 @@ import {TransportApi} from './types/apis/TransportAPI';
 import {BaseApiResponse, cback as cbackType, rs as rsType} from './types/base';
 import {BlockStatusResponse} from './types/beans';
 
-export const requester = (axios: AxiosStatic, nodeAddress) => <R>(obj: { noApiPrefix?: boolean, headers?: any, params?: any, path: string, method?: string, data?: any }, cback: cbackType<R>): Promise<R & BaseApiResponse> => {
+export const requester = (axios: AxiosStatic, nodeAddress, opts: {timeout: number}) => <R>(obj: { noApiPrefix?: boolean, headers?: any, params?: any, path: string, method?: string, data?: any }, cback: cbackType<R>): Promise<R & BaseApiResponse> => {
   return axios({
     json   : true,
-    timeout: 4000,
+    timeout: opts.timeout,
     url    : `${nodeAddress}${obj.noApiPrefix ? '' : '/api'}${obj.path}`,
     ...obj,
   })
