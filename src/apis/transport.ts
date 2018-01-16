@@ -11,21 +11,21 @@ export const transport = (rs: RsType): (headers: TransportHeaders) => TransportA
       return rs({
         headers,
         noApiPrefix: true,
-        path       : 'peer/height',
+        path       : '/peer/height',
       }, cback);
     },
     listPeers(cback) {
       return rs({
         headers,
         noApiPrefix: true,
-        path       : 'peer/list',
+        path       : '/peer/list',
       }, cback);
     },
     ping(cback) {
       return rs({
         headers,
         noApiPrefix: true,
-        path       : 'peer/ping',
+        path       : '/peer/ping',
       }, cback);
     },
     postTransaction(transaction: BaseTransaction<any>, cback) {
@@ -34,7 +34,7 @@ export const transport = (rs: RsType): (headers: TransportHeaders) => TransportA
         headers,
         method     : 'POST',
         noApiPrefix: true,
-        path       : 'peer/transactions',
+        path       : '/peer/transactions',
       }, cback);
     },
     postTransactions(transactions: Array<BaseTransaction<any>>, cback) {
@@ -43,7 +43,7 @@ export const transport = (rs: RsType): (headers: TransportHeaders) => TransportA
         headers,
         method     : 'POST',
         noApiPrefix: true,
-        path       : 'peer/transactions',
+        path       : '/peer/transactions',
       }, cback);
     },
     postSignature(signature: Signature|Signature[], cback) {
@@ -58,7 +58,7 @@ export const transport = (rs: RsType): (headers: TransportHeaders) => TransportA
         headers,
         method     : 'POST',
         noApiPrefix: true,
-        path       : 'peer/signatures',
+        path       : '/peer/signatures',
       }, cback);
     },
   });

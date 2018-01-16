@@ -24,7 +24,7 @@ describe('Transport', () => {
     expect(stub.calledOnce).is.true;
     expect(stub.firstCall.args[0].headers).to.be.deep.eq(headers);
     expect(stub.firstCall.args[0].noApiPrefix).to.be.deep.eq(true);
-    expect(stub.firstCall.args[0].path).to.be.deep.eq('peer/height');
+    expect(stub.firstCall.args[0].path).to.be.deep.eq('/peer/height');
   });
 
   it('.listPeers calls peer/list + noApiPrefix and headers', () => {
@@ -32,7 +32,7 @@ describe('Transport', () => {
     expect(stub.calledOnce).is.true;
     expect(stub.firstCall.args[0].headers).to.be.deep.eq(headers);
     expect(stub.firstCall.args[0].noApiPrefix).to.be.deep.eq(true);
-    expect(stub.firstCall.args[0].path).to.be.deep.eq('peer/list');
+    expect(stub.firstCall.args[0].path).to.be.deep.eq('/peer/list');
   });
 
   it('.ping calls peer/ping + noApiPrefix and headers', () => {
@@ -40,7 +40,7 @@ describe('Transport', () => {
     expect(stub.calledOnce).is.true;
     expect(stub.firstCall.args[0].headers).to.be.deep.eq(headers);
     expect(stub.firstCall.args[0].noApiPrefix).to.be.deep.eq(true);
-    expect(stub.firstCall.args[0].path).to.be.deep.eq('peer/ping');
+    expect(stub.firstCall.args[0].path).to.be.deep.eq('/peer/ping');
   });
 
   it('.postTransactions calls peer/transactions in POST with data & noApiPrefix and headers', () => {
@@ -50,7 +50,7 @@ describe('Transport', () => {
     expect(stub.firstCall.args[0].noApiPrefix).to.be.deep.eq(true);
     expect(stub.firstCall.args[0].method).to.be.deep.eq('POST');
     expect(stub.firstCall.args[0].data).to.be.deep.eq({ transactions: [{ a: 1 }] });
-    expect(stub.firstCall.args[0].path).to.be.deep.eq('peer/transactions');
+    expect(stub.firstCall.args[0].path).to.be.deep.eq('/peer/transactions');
   });
 
   it('.postTransaction calls peer/transactions in POST with data & noApiPrefix and headers', () => {
@@ -60,7 +60,7 @@ describe('Transport', () => {
     expect(stub.firstCall.args[0].noApiPrefix).to.be.deep.eq(true);
     expect(stub.firstCall.args[0].method).to.be.deep.eq('POST');
     expect(stub.firstCall.args[0].data).to.be.deep.eq({ transaction: { a: 1 } });
-    expect(stub.firstCall.args[0].path).to.be.deep.eq('peer/transactions');
+    expect(stub.firstCall.args[0].path).to.be.deep.eq('/peer/transactions');
   });
 
   it('.postSignature calls peer/signatures in POST with data & noApiPrefix and headers', () => {
@@ -70,7 +70,7 @@ describe('Transport', () => {
     expect(stub.firstCall.args[0].noApiPrefix).to.be.deep.eq(true);
     expect(stub.firstCall.args[0].method).to.be.deep.eq('POST');
     expect(stub.firstCall.args[0].data).to.be.deep.eq({ signature: { a: 1 } });
-    expect(stub.firstCall.args[0].path).to.be.deep.eq('peer/signatures');
+    expect(stub.firstCall.args[0].path).to.be.deep.eq('/peer/signatures');
   });
 
   it('.postSignature withArray calls peer/signatures in POST with data & noApiPrefix and headers', () => {
@@ -80,6 +80,6 @@ describe('Transport', () => {
     expect(stub.firstCall.args[0].noApiPrefix).to.be.deep.eq(true);
     expect(stub.firstCall.args[0].method).to.be.deep.eq('POST');
     expect(stub.firstCall.args[0].data).to.be.deep.eq({ signatures: [{ a: 1 }] });
-    expect(stub.firstCall.args[0].path).to.be.deep.eq('peer/signatures');
+    expect(stub.firstCall.args[0].path).to.be.deep.eq('/peer/signatures');
   });
 });
