@@ -1,4 +1,5 @@
 // import realAxios from 'axios';
+// tslint:disable
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
 import * as sinon from 'sinon';
@@ -10,7 +11,7 @@ chai.use(chaiAsPromised);
 
 // const index       = proxyquire(() => require('../src/index', { './apis/': apiStub, axios}) as  { dposAPI: typeof origDPOSAPI };
 
-const dftOpts = { timeout: 10000 };
+const dftOpts = { timeout: 10000, errorAsResponse: true };
 describe('internal_utils', () => {
   describe('requester', () => {
 
@@ -54,22 +55,22 @@ describe('internal_utils', () => {
         .to.be.rejectedWith('Error');
     });
 
-    it('should wrap error if request ok but API fail', async () => {
+    it('should return error if request ok but API fail', async () => {
       const stub = sinon.stub().returns(Promise.resolve({ data: { success: false, error: 'Error' } }));
-      await expect(requester(stub as any, 'http://vekexasia.rules', dftOpts)({
+      expect(await requester(stub as any, 'http://vekexasia.rules', dftOpts)({
         path       : '/hey',
         noApiPrefix: true
       } as any, undefined))
-        .to.be.rejectedWith('Error');
+        .to.be.deep.eq({ success: false, error: 'Error'})
     });
 
-    it('should wrap error message if request ok but API fail and no error present', async () => {
+    it('should return error if request ok but API fail and no error present', async () => {
       const stub = sinon.stub().returns(Promise.resolve({ data: { success: false, message: 'Error' } }));
-      await expect(requester(stub as any, 'http://vekexasia.rules', dftOpts)({
+      expect(await requester(stub as any, 'http://vekexasia.rules', dftOpts)({
         path       : '/hey',
         noApiPrefix: true
       } as any, undefined))
-        .to.be.rejectedWith('Error');
+        .to.be.deep.eq({ success: false, message: 'Error' });
     });
 
     it('should propagate success to cback also', async () => {
@@ -86,7 +87,7 @@ describe('internal_utils', () => {
     it('should propagate error to cback also', async () => {
       const cbackStub = sinon.stub();
       const stub      = sinon.stub().returns(Promise.resolve({ data: { success: false, error: 'Error' } }));
-      await expect(requester(stub as any, 'http://vekexasia.rules', dftOpts)({
+      await expect(requester(stub as any, 'http://vekexasia.rules', {... dftOpts, errorAsResponse: false})({
         path       : '/hey',
         noApiPrefix: true,
       } as any, cbackStub))

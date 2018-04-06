@@ -43,6 +43,11 @@ export interface DposAPI extends APIWrapper {
   timeout: number;
 
   /**
+   * Specify if error should be rewritten as response.
+   */
+  errorAsResponse: boolean;
+
+  /**
    * Creates a new API Wrapper with the given node address.
    * So that you can be connected to multiple nodes at once.
    * @param nodeAddress Ex: http://localhost:1234 (no leading slash)
@@ -109,9 +114,10 @@ export interface APIWrapper {
 
 export const dposAPI: DposAPI = (() => {
   const toRet = {
+    errorAsResponse: true,
     nodeAddress: '',
-    newWrapper(nodeAddress: string, opts: {timeout: number} = {timeout: 4000}): APIWrapper {
-      const req = requester(axios, nodeAddress, opts);
+    newWrapper(nodeAddress: string, opts: {timeout: number, errorAsResponse?: boolean} = {timeout: 4000}): APIWrapper {
+      const req = requester(axios, nodeAddress, {...{errorAsResponse: true}, ...opts});
       return addTransportBuilder(
         {
           accounts       : accounts(req),
@@ -133,7 +139,7 @@ export const dposAPI: DposAPI = (() => {
   } as DposAPI;
 
   function rproxy<R>(obj: { params?: any, path: string, method?: string, data?: any }, cback: cbackType<R>): Promise<R & BaseApiResponse> {
-    return requester(axios, toRet.nodeAddress, {timeout: toRet.timeout}).apply(null, arguments);
+    return requester(axios, toRet.nodeAddress, {timeout: toRet.timeout, errorAsResponse: toRet.errorAsResponse}).apply(null, arguments);
   }
 
   toRet.accounts        = accounts(rproxy);

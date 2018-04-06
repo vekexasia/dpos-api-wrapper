@@ -6,15 +6,27 @@ import {TransportApi} from './types/apis/TransportAPI';
 import {BaseApiResponse, cback as cbackType, rs as rsType} from './types/base';
 import {BlockStatusResponse} from './types/beans';
 
-export const requester = (axios: AxiosStatic, nodeAddress, opts: {timeout: number}) => <R>(obj: { noApiPrefix?: boolean, headers?: any, params?: any, path: string, method?: string, data?: any }, cback: cbackType<R>): Promise<R & BaseApiResponse> => {
+export const requester = (axios: AxiosStatic, nodeAddress, opts: {timeout: number, errorAsResponse: boolean}) => <R>(obj: { noApiPrefix?: boolean, headers?: any, params?: any, path: string, method?: string, data?: any }, cback: cbackType<R>): Promise<R & BaseApiResponse> => {
   return axios({
     json   : true,
     timeout: opts.timeout,
     url    : `${nodeAddress}${obj.noApiPrefix ? '' : '/api'}${obj.path}`,
     ...obj,
   })
+    .catch((err) => {
+      if (err.response && err.response.data && !err.response.data.success) {
+        if (opts.errorAsResponse) {
+          return err.response;
+        }
+        return Promise.reject(new Error(err.response.data.error || err.response.data.message));
+      }
+      return Promise.reject(err);
+    })
     .then((resp) => {
       if (resp.data.success === false) {
+        if (opts.errorAsResponse) {
+          return resp.data;
+        }
         return Promise.reject(new Error(resp.data.error || resp.data.message));
       }
       return resp.data;
