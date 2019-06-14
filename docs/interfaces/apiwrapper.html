@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>APIWrapper | risejs</title>
+	<title>APIWrapper | dpos-api-wrapper</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style type="text/css">/*! normalize.css v1.1.3 | MIT License | git.io/normalize */
@@ -882,7 +882,7 @@ img { max-width: 100%; }
 		<div class="container">
 			<div class="table-wrap">
 				<div class="table-cell">
-					<strong>risejs</strong>
+					<strong>dpos-api-wrapper</strong>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -912,6 +912,12 @@ img { max-width: 100%; }
 </header>
 <nav class="tsd-navigation secondary">
 	<ul>
+		<li class=" tsd-kind-enum">
+			<a href="../enums/peerstate.html" class="tsd-kind-icon">Peer<wbr>State</a>
+		</li>
+		<li class=" tsd-kind-enum">
+			<a href="../enums/transactiontype.html" class="tsd-kind-icon">Transaction<wbr>Type</a>
+		</li>
 		<li class="current tsd-kind-interface">
 			<a href="apiwrapper.html" class="tsd-kind-icon">APIWrapper</a>
 			<ul>
@@ -920,6 +926,9 @@ img { max-width: 100%; }
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="apiwrapper.html#blocks" class="tsd-kind-icon">blocks</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="apiwrapper.html#buildtransport" class="tsd-kind-icon">build<wbr>Transport</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="apiwrapper.html#dapps" class="tsd-kind-icon">dapps</a>
@@ -937,6 +946,9 @@ img { max-width: 100%; }
 					<a href="apiwrapper.html#peers" class="tsd-kind-icon">peers</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="apiwrapper.html#rawrequest" class="tsd-kind-icon">raw<wbr>Request</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="apiwrapper.html#signatures" class="tsd-kind-icon">signatures</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
@@ -946,6 +958,63 @@ img { max-width: 100%; }
 					<a href="apiwrapper.html#transport" class="tsd-kind-icon">transport</a>
 				</li>
 			</ul>
+		</li>
+		<li class=" tsd-kind-interface">
+			<a href="account.html" class="tsd-kind-icon">Account</a>
+		</li>
+		<li class=" tsd-kind-interface">
+			<a href="baseapiresponse.html" class="tsd-kind-icon">Base<wbr>Api<wbr>Response</a>
+		</li>
+		<li class=" tsd-kind-interface">
+			<a href="baseblock.html" class="tsd-kind-icon">Base<wbr>Block</a>
+		</li>
+		<li class=" tsd-kind-interface tsd-has-type-parameter">
+			<a href="basetransaction.html" class="tsd-kind-icon">Base<wbr>Transaction</a>
+		</li>
+		<li class=" tsd-kind-interface">
+			<a href="block.html" class="tsd-kind-icon">Block</a>
+		</li>
+		<li class=" tsd-kind-interface">
+			<a href="blockstatusresponse.html" class="tsd-kind-icon">Block<wbr>Status<wbr>Response</a>
+		</li>
+		<li class=" tsd-kind-interface">
+			<a href="delegate.html" class="tsd-kind-icon">Delegate</a>
+		</li>
+		<li class=" tsd-kind-interface">
+			<a href="dposapi.html" class="tsd-kind-icon">DposAPI</a>
+		</li>
+		<li class=" tsd-kind-interface">
+			<a href="forgedblock.html" class="tsd-kind-icon">Forged<wbr>Block</a>
+		</li>
+		<li class=" tsd-kind-interface">
+			<a href="peer.html" class="tsd-kind-icon">Peer</a>
+		</li>
+		<li class=" tsd-kind-interface">
+			<a href="signature.html" class="tsd-kind-icon">Signature</a>
+		</li>
+		<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+			<a href="../globals.html#apipromise" class="tsd-kind-icon">Api<wbr>Promise</a>
+		</li>
+		<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+			<a href="../globals.html#multisigtransaction" class="tsd-kind-icon">Multi<wbr>Sig<wbr>Transaction</a>
+		</li>
+		<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+			<a href="../globals.html#transaction" class="tsd-kind-icon">Transaction</a>
+		</li>
+		<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+			<a href="../globals.html#cback" class="tsd-kind-icon">cback</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="../globals.html#rs" class="tsd-kind-icon">rs</a>
+		</li>
+		<li class=" tsd-kind-variable">
+			<a href="../globals.html#dposapi" class="tsd-kind-icon">dposAPI</a>
+		</li>
+		<li class=" tsd-kind-function tsd-has-type-parameter">
+			<a href="../globals.html#addtransportbuilder" class="tsd-kind-icon">add<wbr>Transport<wbr>Builder</a>
+		</li>
+		<li class=" tsd-kind-function">
+			<a href="../globals.html#requester" class="tsd-kind-icon">requester</a>
 		</li>
 	</ul>
 </nav>
@@ -958,7 +1027,7 @@ img { max-width: 100%; }
 					<span class="target">APIWrapper</span>
 					<ul class="tsd-hierarchy">
 						<li>
-							<a href="rise.html" class="tsd-signature-type">Rise</a>
+							<a href="dposapi.html" class="tsd-signature-type">DposAPI</a>
 						</li>
 					</ul>
 				</li>
@@ -973,11 +1042,13 @@ img { max-width: 100%; }
 						<ul class="tsd-index-list">
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="apiwrapper.html#accounts" class="tsd-kind-icon">accounts</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="apiwrapper.html#blocks" class="tsd-kind-icon">blocks</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="apiwrapper.html#buildtransport" class="tsd-kind-icon">build<wbr>Transport</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="apiwrapper.html#dapps" class="tsd-kind-icon">dapps</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="apiwrapper.html#delegates" class="tsd-kind-icon">delegates</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="apiwrapper.html#loader" class="tsd-kind-icon">loader</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="apiwrapper.html#multisignatures" class="tsd-kind-icon">multi<wbr>Signatures</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="apiwrapper.html#peers" class="tsd-kind-icon">peers</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="apiwrapper.html#rawrequest" class="tsd-kind-icon">raw<wbr>Request</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="apiwrapper.html#signatures" class="tsd-kind-icon">signatures</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="apiwrapper.html#transactions" class="tsd-kind-icon">transactions</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="apiwrapper.html#transport" class="tsd-kind-icon">transport</a></li>
@@ -991,10 +1062,10 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="accounts" class="tsd-anchor"></a>
 				<h3>accounts</h3>
-				<div class="tsd-signature tsd-kind-icon">accounts<span class="tsd-signature-symbol">:</span> <a href="accountsapi.html" class="tsd-signature-type">AccountsAPI</a></div>
+				<div class="tsd-signature tsd-kind-icon">accounts<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AccountsAPI</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RiseVision/rise-js-sdk/blob/c4ff5a0/src/index.ts#L50">index.ts:50</a></li>
+						<li>Defined in <a href="https://github.com/vekexasia/dpos-api-wrapper/blob/7478486/src/index.ts#L63">index.ts:63</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1006,10 +1077,10 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="blocks" class="tsd-anchor"></a>
 				<h3>blocks</h3>
-				<div class="tsd-signature tsd-kind-icon">blocks<span class="tsd-signature-symbol">:</span> <a href="blocksapi.html" class="tsd-signature-type">BlocksAPI</a></div>
+				<div class="tsd-signature tsd-kind-icon">blocks<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">BlocksAPI</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RiseVision/rise-js-sdk/blob/c4ff5a0/src/index.ts#L54">index.ts:54</a></li>
+						<li>Defined in <a href="https://github.com/vekexasia/dpos-api-wrapper/blob/7478486/src/index.ts#L67">index.ts:67</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1019,12 +1090,55 @@ img { max-width: 100%; }
 				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="dapps" class="tsd-anchor"></a>
-				<h3>dapps</h3>
-				<div class="tsd-signature tsd-kind-icon">dapps<span class="tsd-signature-symbol">:</span> <a href="dappsapi.html" class="tsd-signature-type">DappsAPI</a></div>
+				<a name="buildtransport" class="tsd-anchor"></a>
+				<h3>build<wbr>Transport</h3>
+				<div class="tsd-signature tsd-kind-icon">build<wbr>Transport<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RiseVision/rise-js-sdk/blob/c4ff5a0/src/index.ts#L83">index.ts:83</a></li>
+						<li>Defined in <a href="https://github.com/vekexasia/dpos-api-wrapper/blob/7478486/src/index.ts#L103">index.ts:103</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Easily create a transport API without providing headers.</p>
+					</div>
+					<dl class="tsd-comment-tags">
+						<dt>param</dt>
+						<dd><p>flush current transportAPI cache</p>
+						</dd>
+						<dt>returns</dt>
+						<dd></dd>
+					</dl>
+				</div>
+				<div class="tsd-type-declaration">
+					<h4>Type declaration</h4>
+					<ul class="tsd-parameters">
+						<li class="tsd-parameter-siganture">
+							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property tsd-is-not-exported">
+								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>flushCache<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TransportApi</span><span class="tsd-signature-symbol">&gt;</span></li>
+							</ul>
+							<ul class="tsd-descriptions">
+								<li class="tsd-description">
+									<h4 class="tsd-parameters-title">Parameters</h4>
+									<ul class="tsd-parameters">
+										<li>
+											<h5><span class="tsd-flag ts-flagOptional">Optional</span> flushCache: <span class="tsd-signature-type">boolean</span></h5>
+										</li>
+									</ul>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TransportApi</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="dapps" class="tsd-anchor"></a>
+				<h3>dapps</h3>
+				<div class="tsd-signature tsd-kind-icon">dapps<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DappsAPI</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/vekexasia/dpos-api-wrapper/blob/7478486/src/index.ts#L96">index.ts:96</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1036,10 +1150,10 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="delegates" class="tsd-anchor"></a>
 				<h3>delegates</h3>
-				<div class="tsd-signature tsd-kind-icon">delegates<span class="tsd-signature-symbol">:</span> <a href="delegatesapi.html" class="tsd-signature-type">DelegatesAPI</a></div>
+				<div class="tsd-signature tsd-kind-icon">delegates<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DelegatesAPI</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RiseVision/rise-js-sdk/blob/c4ff5a0/src/index.ts#L74">index.ts:74</a></li>
+						<li>Defined in <a href="https://github.com/vekexasia/dpos-api-wrapper/blob/7478486/src/index.ts#L87">index.ts:87</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1051,10 +1165,10 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="loader" class="tsd-anchor"></a>
 				<h3>loader</h3>
-				<div class="tsd-signature tsd-kind-icon">loader<span class="tsd-signature-symbol">:</span> <a href="loaderapi.html" class="tsd-signature-type">LoaderAPI</a></div>
+				<div class="tsd-signature tsd-kind-icon">loader<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">LoaderAPI</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RiseVision/rise-js-sdk/blob/c4ff5a0/src/index.ts#L58">index.ts:58</a></li>
+						<li>Defined in <a href="https://github.com/vekexasia/dpos-api-wrapper/blob/7478486/src/index.ts#L71">index.ts:71</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1066,10 +1180,10 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="multisignatures" class="tsd-anchor"></a>
 				<h3>multi<wbr>Signatures</h3>
-				<div class="tsd-signature tsd-kind-icon">multi<wbr>Signatures<span class="tsd-signature-symbol">:</span> <a href="multisignaturesapi.html" class="tsd-signature-type">MultiSignaturesAPI</a></div>
+				<div class="tsd-signature tsd-kind-icon">multi<wbr>Signatures<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MultiSignaturesAPI</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RiseVision/rise-js-sdk/blob/c4ff5a0/src/index.ts#L78">index.ts:78</a></li>
+						<li>Defined in <a href="https://github.com/vekexasia/dpos-api-wrapper/blob/7478486/src/index.ts#L91">index.ts:91</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1081,10 +1195,10 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="peers" class="tsd-anchor"></a>
 				<h3>peers</h3>
-				<div class="tsd-signature tsd-kind-icon">peers<span class="tsd-signature-symbol">:</span> <a href="peersapi.html" class="tsd-signature-type">PeersAPI</a></div>
+				<div class="tsd-signature tsd-kind-icon">peers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PeersAPI</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RiseVision/rise-js-sdk/blob/c4ff5a0/src/index.ts#L66">index.ts:66</a></li>
+						<li>Defined in <a href="https://github.com/vekexasia/dpos-api-wrapper/blob/7478486/src/index.ts#L79">index.ts:79</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1094,12 +1208,72 @@ img { max-width: 100%; }
 				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="signatures" class="tsd-anchor"></a>
-				<h3>signatures</h3>
-				<div class="tsd-signature tsd-kind-icon">signatures<span class="tsd-signature-symbol">:</span> <a href="signaturesapi.html" class="tsd-signature-type">SignaturesAPI</a></div>
+				<a name="rawrequest" class="tsd-anchor"></a>
+				<h3>raw<wbr>Request</h3>
+				<div class="tsd-signature tsd-kind-icon">raw<wbr>Request<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RiseVision/rise-js-sdk/blob/c4ff5a0/src/index.ts#L70">index.ts:70</a></li>
+						<li>Defined in <a href="https://github.com/vekexasia/dpos-api-wrapper/blob/7478486/src/index.ts#L112">index.ts:112</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-type-declaration">
+					<h4>Type declaration</h4>
+					<ul class="tsd-parameters">
+						<li class="tsd-parameter-siganture">
+							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property tsd-has-type-parameter tsd-is-not-exported">
+								<li class="tsd-signature tsd-kind-icon">&lt;R&gt;<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span>, cback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">cbackType</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol"> | </span><a href="baseapiresponse.html" class="tsd-signature-type">BaseApiResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
+							</ul>
+							<ul class="tsd-descriptions">
+								<li class="tsd-description">
+									<h4 class="tsd-type-parameters-title">Type parameters</h4>
+									<ul class="tsd-type-parameters">
+										<li>
+											<h4>R</h4>
+										</li>
+									</ul>
+									<h4 class="tsd-parameters-title">Parameters</h4>
+									<ul class="tsd-parameters">
+										<li>
+											<h5>obj: <span class="tsd-signature-type">object</span></h5>
+											<ul class="tsd-parameters">
+												<li class="tsd-parameter">
+													<h5><span class="tsd-flag ts-flagOptional">Optional</span> data<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span></h5>
+												</li>
+												<li class="tsd-parameter">
+													<h5><span class="tsd-flag ts-flagOptional">Optional</span> headers<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span></h5>
+												</li>
+												<li class="tsd-parameter">
+													<h5><span class="tsd-flag ts-flagOptional">Optional</span> method<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+												</li>
+												<li class="tsd-parameter">
+													<h5><span class="tsd-flag ts-flagOptional">Optional</span> no<wbr>Api<wbr>Prefix<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
+												</li>
+												<li class="tsd-parameter">
+													<h5><span class="tsd-flag ts-flagOptional">Optional</span> params<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span></h5>
+												</li>
+												<li class="tsd-parameter">
+													<h5>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+												</li>
+											</ul>
+										</li>
+										<li>
+											<h5>cback: <span class="tsd-signature-type">cbackType</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></h5>
+										</li>
+									</ul>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol"> | </span><a href="baseapiresponse.html" class="tsd-signature-type">BaseApiResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="signatures" class="tsd-anchor"></a>
+				<h3>signatures</h3>
+				<div class="tsd-signature tsd-kind-icon">signatures<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">SignaturesAPI</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/vekexasia/dpos-api-wrapper/blob/7478486/src/index.ts#L83">index.ts:83</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1111,10 +1285,10 @@ img { max-width: 100%; }
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="transactions" class="tsd-anchor"></a>
 				<h3>transactions</h3>
-				<div class="tsd-signature tsd-kind-icon">transactions<span class="tsd-signature-symbol">:</span> <a href="transactionsapi.html" class="tsd-signature-type">TransactionsAPI</a></div>
+				<div class="tsd-signature tsd-kind-icon">transactions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TransactionsAPI</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RiseVision/rise-js-sdk/blob/c4ff5a0/src/index.ts#L62">index.ts:62</a></li>
+						<li>Defined in <a href="https://github.com/vekexasia/dpos-api-wrapper/blob/7478486/src/index.ts#L75">index.ts:75</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1129,7 +1303,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">transport<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/RiseVision/rise-js-sdk/blob/c4ff5a0/src/index.ts#L90">index.ts:90</a></li>
+						<li>Defined in <a href="https://github.com/vekexasia/dpos-api-wrapper/blob/7478486/src/index.ts#L110">index.ts:110</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1148,17 +1322,17 @@ img { max-width: 100%; }
 					<ul class="tsd-parameters">
 						<li class="tsd-parameter-siganture">
 							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property tsd-is-not-exported">
-								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>headers<span class="tsd-signature-symbol">: </span><a href="transportheaders.html" class="tsd-signature-type">TransportHeaders</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="transportapi.html" class="tsd-signature-type">TransportApi</a></li>
+								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>headers<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TransportHeaders</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TransportApi</span></li>
 							</ul>
 							<ul class="tsd-descriptions">
 								<li class="tsd-description">
 									<h4 class="tsd-parameters-title">Parameters</h4>
 									<ul class="tsd-parameters">
 										<li>
-											<h5>headers: <a href="transportheaders.html" class="tsd-signature-type">TransportHeaders</a></h5>
+											<h5>headers: <span class="tsd-signature-type">TransportHeaders</span></h5>
 										</li>
 									</ul>
-									<h4 class="tsd-returns-title">Returns <a href="transportapi.html" class="tsd-signature-type">TransportApi</a></h4>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TransportApi</span></h4>
 								</li>
 							</ul>
 						</li>
