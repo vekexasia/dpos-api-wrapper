@@ -80,6 +80,7 @@ export interface BaseTransaction<T> {
   asset: T;
   recipientId: string;
   signature: string;
+  signSignature: string;
   id: string;
   fee: number;
 }
