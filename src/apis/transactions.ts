@@ -1,13 +1,13 @@
 import { TransactionsAPI } from '../types/apis/TransactionsAPI';
 import { cback, rs as RsType } from '../types/base';
-import { Transaction } from '../types/beans';
+import { BaseTransaction, Transaction } from '../types/beans';
 /**
  * @private
  * @internal
  */
 export const transactions = (rs: RsType): TransactionsAPI => ({
 
-  get<T>(id: string, callback?: cback<{ transaction: Transaction<T> }>) {
+  get<T>(id: string, callback?: cback<{ transaction: BaseTransaction<T> & { height: number, blockId: string, confirmations: number }}>) {
     return rs({
       params: {id},
       path: '/transactions/get',
@@ -36,13 +36,14 @@ export const transactions = (rs: RsType): TransactionsAPI => ({
     }, callback);
   },
 
-  getUnconfirmedTransactions(callback?: cback<{ transactions: Array<Transaction<any>> }>) {
+  getUnconfirmedList(query = {}, callback?) {
     return rs({
+      params: {...query},
       path: '/transactions/unconfirmed',
     }, callback);
   },
 
-  getUnconfirmedTransaction(id: string, callback?: cback<{ transactions: Array<Transaction<any>> }>) {
+  getUnconfirmedTransaction(id: string, callback?: cback<{ transactions: Array<BaseTransaction<any>> }>) {
     return rs({
       params: {id},
       path: '/transactions/unconfirmed/get',

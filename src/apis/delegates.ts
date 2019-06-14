@@ -88,7 +88,7 @@ export const delegates = (rs: RsType): DelegatesAPI => ({
     );
   },
 
-  getForgingStatus(publicKey?: string | cback<{ enabled: boolean, delegates: string[] }>, callback?: cback<{ enabled: boolean }>) {
+  getForgingStatus(publicKey?: string | cback<{ enabled: boolean, delegates: string[] }>, callback?: cback<{ enabled: boolean, delegates: string[]  }>) {
     if (typeof(publicKey) === 'function') {
       callback  = publicKey;
       publicKey = undefined;

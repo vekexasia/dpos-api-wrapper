@@ -1,4 +1,4 @@
-import {AxiosStatic} from 'axios';
+import { AxiosInstance, AxiosRequestConfig, AxiosStatic } from 'axios';
 import {transport} from './apis/transport';
 import {BlocksAPI} from './types/apis/BlocksAPI';
 import {PeersAPI} from './types/apis/PeersAPI';
@@ -6,13 +6,13 @@ import {TransportApi} from './types/apis/TransportAPI';
 import {BaseApiResponse, cback as cbackType, rs as rsType} from './types/base';
 import {BlockStatusResponse} from './types/beans';
 
-export const requester = (axios: AxiosStatic, nodeAddress, opts: {timeout: number, errorAsResponse: boolean}) => <R>(obj: { noApiPrefix?: boolean, headers?: any, params?: any, path: string, method?: string, data?: any }, cback: cbackType<R>): Promise<R & BaseApiResponse> => {
+export const requester = (axios: AxiosInstance, nodeAddress, opts: {timeout: number, errorAsResponse: boolean}) => <R>(obj: { noApiPrefix?: boolean, headers?: any, params?: any, path: string, method?: string, data?: any }, cback: cbackType<R>): Promise<R & BaseApiResponse> => {
   return axios({
     json   : true,
     timeout: opts.timeout,
     url    : `${nodeAddress}${obj.noApiPrefix ? '' : '/api'}${obj.path}`,
     ...obj,
-  })
+  } as AxiosRequestConfig)
     .catch((err) => {
       if (err.response && err.response.data && !err.response.data.success) {
         if (opts.errorAsResponse) {

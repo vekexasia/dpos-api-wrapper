@@ -38,7 +38,7 @@
   "readmeFilename": "README.md",
   "author": "Andrea Baccega <vekexasia+crypto@gmail.com>",
   "dependencies": {
-    "axios": "^0.16.2"
+    "axios": "^0.19.0"
   },
   "devDependencies": {
     "@types/chai": "^4.0.0",
@@ -74,7 +74,7 @@
     "typedoc": "^0.7.1",
     "typedoc-clarity-theme": "^1.1.0",
     "typedoc-plugin-internal-external": "^1.0.9",
-    "typescript": "~2.3.4",
+    "typescript": "~3.5.2",
     "uglifyjs-webpack-plugin": "^0.4.3",
     "webpack": "^2.7.0"
   }

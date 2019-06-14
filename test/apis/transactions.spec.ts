@@ -40,7 +40,7 @@ describe('Transactions', () => {
   });
   it('.getUnconfirmedTransactions should call /unconfirmed', () => {
     const spy = sinon.spy();
-    transactions(spy).getUnconfirmedTransactions();
+    transactions(spy).getUnconfirmedList();
     apiBasicChecker(spy, '/transactions/unconfirmed', undefined);
   });
   it('.getUnconfirmedTransaction should call /unconfirmed/get with give param', () => {
